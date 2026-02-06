@@ -44,19 +44,19 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-card/80 backdrop-blur-xl">
-      <div className="container flex h-16 items-center justify-between">
+      <div className="container flex h-14 md:h-16 items-center justify-between px-3 md:px-6">
         {/* Left section - Logo and Title */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4 min-w-0">
           <img 
             src={gasmigLogo} 
             alt="Gasmig" 
-            className="h-8 w-auto"
+            className="h-6 md:h-8 w-auto shrink-0"
           />
-          <div className="hidden md:block">
-            <h1 className="text-sm font-semibold text-foreground">
+          <div className="hidden sm:block min-w-0">
+            <h1 className="text-xs md:text-sm font-semibold text-foreground truncate">
               Monitoramento de Marca & Segurança Digital
             </h1>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground hidden md:block">
               Painel de Governança Digital
             </p>
           </div>

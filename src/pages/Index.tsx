@@ -10,7 +10,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container py-6 space-y-8">
+      <main className="container px-3 md:px-6 py-4 md:py-6 space-y-6 md:space-y-8">
         {/* Overview Section */}
         <OverviewCards />
         
@@ -28,10 +28,10 @@ const Index = () => {
       </main>
       
       {/* Footer */}
-      <footer className="border-t border-border/50 py-6 mt-8">
-        <div className="container flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-          <p>© 2025 Gasmig - Monitoramento de Marca & Segurança Digital</p>
-          <p>Versão 1.0.0 • Ambiente de Demonstração</p>
+      <footer className="border-t border-border/50 py-4 md:py-6 mt-6 md:mt-8">
+        <div className="container px-3 md:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 md:gap-4 text-xs md:text-sm text-muted-foreground text-center sm:text-left">
+          <p>© 2025 Gasmig - Monitoramento de Marca</p>
+          <p>v1.0.0 • Demo</p>
         </div>
       </footer>
     </div>
