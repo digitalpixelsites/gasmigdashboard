@@ -161,54 +161,56 @@ export function MentionsSection() {
   });
 
   return (
-    <section className="space-y-6">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+    <section className="space-y-4 md:space-y-6">
+      <div className="flex flex-col gap-3">
         <h2 className="text-lg font-semibold text-foreground">Monitoramento de Menções</h2>
         
         {/* Filters */}
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="relative">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2 sm:gap-3">
+          <div className="relative w-full sm:w-auto">
             <Input
               placeholder="Buscar menções..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-48 h-9 pl-3 text-sm"
+              className="w-full sm:w-48 h-9 pl-3 text-sm"
             />
           </div>
           
-          <Select value={channelFilter} onValueChange={setChannelFilter}>
-            <SelectTrigger className="w-32 h-9">
-              <SelectValue placeholder="Canal" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todos</SelectItem>
-              <SelectItem value="news">Notícias</SelectItem>
-              <SelectItem value="blog">Blogs</SelectItem>
-              <SelectItem value="social">Redes Sociais</SelectItem>
-              <SelectItem value="web">Web</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="flex gap-2 w-full sm:w-auto">
+            <Select value={channelFilter} onValueChange={setChannelFilter}>
+              <SelectTrigger className="flex-1 sm:w-32 h-9">
+                <SelectValue placeholder="Canal" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todos</SelectItem>
+                <SelectItem value="news">Notícias</SelectItem>
+                <SelectItem value="blog">Blogs</SelectItem>
+                <SelectItem value="social">Redes Sociais</SelectItem>
+                <SelectItem value="web">Web</SelectItem>
+              </SelectContent>
+            </Select>
+            
+            <Select value={sentimentFilter} onValueChange={setSentimentFilter}>
+              <SelectTrigger className="flex-1 sm:w-32 h-9">
+                <SelectValue placeholder="Sentimento" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todos</SelectItem>
+                <SelectItem value="positive">Positivo</SelectItem>
+                <SelectItem value="neutral">Neutro</SelectItem>
+                <SelectItem value="negative">Negativo</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           
-          <Select value={sentimentFilter} onValueChange={setSentimentFilter}>
-            <SelectTrigger className="w-32 h-9">
-              <SelectValue placeholder="Sentimento" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todos</SelectItem>
-              <SelectItem value="positive">Positivo</SelectItem>
-              <SelectItem value="neutral">Neutro</SelectItem>
-              <SelectItem value="negative">Negativo</SelectItem>
-            </SelectContent>
-          </Select>
-          
-          <Button variant="outline" size="sm" className="gap-2 h-9">
+          <Button variant="outline" size="sm" className="gap-2 h-9 w-full sm:w-auto">
             <Filter className="h-4 w-4" />
-            Mais Filtros
+            <span className="sm:inline">Mais Filtros</span>
           </Button>
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-6">
         {/* Mentions Timeline */}
         <div className="lg:col-span-3 space-y-3">
           <div className="glass-card divide-y divide-border/50">

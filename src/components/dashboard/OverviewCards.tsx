@@ -106,13 +106,13 @@ function getVariantStyles(variant: CardData['variant']) {
 
 export function OverviewCards() {
   return (
-    <section className="space-y-4">
-      <div className="flex items-center justify-between">
+    <section className="space-y-3 md:space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4">
         <h2 className="text-lg font-semibold text-foreground">Visão Geral</h2>
-        <span className="text-sm text-muted-foreground">Período: Últimos 30 dias</span>
+        <span className="text-xs md:text-sm text-muted-foreground">Últimos 30 dias</span>
       </div>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">
         {cards.map((card, index) => {
           const styles = getVariantStyles(card.variant);
           const Icon = card.icon;
@@ -120,32 +120,32 @@ export function OverviewCards() {
           return (
             <div 
               key={card.title}
-              className="glass-card p-5 hover-lift animate-fade-in"
+              className="glass-card p-3 md:p-5 hover-lift animate-fade-in"
               style={{ animationDelay: `${index * 50}ms` }}
             >
-              <div className="flex items-start justify-between mb-3">
-                <div className={`p-2.5 rounded-lg ${styles.iconBg}`}>
-                  <Icon className={`h-5 w-5 ${styles.iconColor}`} />
+              <div className="flex items-start justify-between mb-2 md:mb-3">
+                <div className={`p-1.5 md:p-2.5 rounded-lg ${styles.iconBg}`}>
+                  <Icon className={`h-4 w-4 md:h-5 md:w-5 ${styles.iconColor}`} />
                 </div>
                 {card.change !== undefined && (
-                  <div className={`flex items-center gap-1 text-xs font-medium ${
+                  <div className={`flex items-center gap-0.5 md:gap-1 text-[10px] md:text-xs font-medium ${
                     card.change >= 0 ? 'text-success' : 'text-destructive'
                   }`}>
                     {card.change >= 0 ? (
-                      <TrendingUp className="h-3 w-3" />
+                      <TrendingUp className="h-2.5 w-2.5 md:h-3 md:w-3" />
                     ) : (
-                      <TrendingDown className="h-3 w-3" />
+                      <TrendingDown className="h-2.5 w-2.5 md:h-3 md:w-3" />
                     )}
                     {Math.abs(card.change)}%
                   </div>
                 )}
               </div>
               
-              <div className="space-y-1">
-                <p className="text-2xl font-bold text-foreground">{card.value}</p>
-                <p className="text-xs font-medium text-muted-foreground">{card.title}</p>
+              <div className="space-y-0.5 md:space-y-1">
+                <p className="text-lg md:text-2xl font-bold text-foreground">{card.value}</p>
+                <p className="text-[10px] md:text-xs font-medium text-muted-foreground line-clamp-1">{card.title}</p>
                 {card.subValue && (
-                  <p className="text-xs text-muted-foreground/70">{card.subValue}</p>
+                  <p className="text-[10px] md:text-xs text-muted-foreground/70">{card.subValue}</p>
                 )}
               </div>
             </div>

@@ -86,10 +86,10 @@ function getTypeLabel(type: Report['type']) {
 
 export function ReportsSection() {
   return (
-    <section className="space-y-6">
-      <div className="flex items-center justify-between">
+    <section className="space-y-4 md:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <h2 className="text-lg font-semibold text-foreground">Relatórios & Entregáveis</h2>
-        <Button size="sm" className="gap-2">
+        <Button size="sm" className="gap-2 w-full sm:w-auto">
           <FileText className="h-4 w-4" />
           Novo Relatório
         </Button>
@@ -103,52 +103,98 @@ export function ReportsSection() {
           return (
             <div 
               key={report.id}
-              className="p-4 flex items-center justify-between gap-4 hover:bg-muted/30 transition-colors animate-fade-in"
+              className="p-3 md:p-4 hover:bg-muted/30 transition-colors animate-fade-in"
               style={{ animationDelay: `${index * 50}ms` }}
             >
-              <div className="flex items-center gap-4">
-                <div className={`p-2.5 rounded-lg ${
-                  report.format === 'pdf' ? 'bg-destructive/10' : 'bg-success/10'
-                }`}>
-                  {report.format === 'pdf' ? (
-                    <FileText className={`h-5 w-5 ${
-                      report.format === 'pdf' ? 'text-destructive' : 'text-success'
-                    }`} />
-                  ) : (
-                    <FileSpreadsheet className="h-5 w-5 text-success" />
-                  )}
-                </div>
-                
-                <div>
-                  <h3 className="font-medium text-sm text-foreground">{report.title}</h3>
-                  <div className="flex items-center gap-2 mt-1">
-                    <Badge variant="outline" className="text-xs">
-                      {getTypeLabel(report.type)}
-                    </Badge>
-                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                      <Calendar className="h-3 w-3" />
-                      {report.date.toLocaleDateString('pt-BR')}
+              {/* Mobile layout */}
+              <div className="flex flex-col gap-3 sm:hidden">
+                <div className="flex items-start gap-3">
+                  <div className={`p-2 rounded-lg shrink-0 ${
+                    report.format === 'pdf' ? 'bg-destructive/10' : 'bg-success/10'
+                  }`}>
+                    {report.format === 'pdf' ? (
+                      <FileText className="h-4 w-4 text-destructive" />
+                    ) : (
+                      <FileSpreadsheet className="h-4 w-4 text-success" />
+                    )}
+                  </div>
+                  
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-medium text-sm text-foreground line-clamp-2">{report.title}</h3>
+                    <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                      <Badge variant="outline" className="text-xs">
+                        {getTypeLabel(report.type)}
+                      </Badge>
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <Calendar className="h-3 w-3" />
+                        {report.date.toLocaleDateString('pt-BR')}
+                      </div>
+                      <div className={`flex items-center gap-1 text-xs ${statusInfo.className}`}>
+                        <StatusIcon className="h-3 w-3" />
+                        {statusInfo.text}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className={`flex items-center gap-1.5 text-sm ${statusInfo.className}`}>
-                  <StatusIcon className="h-4 w-4" />
-                  <span className="hidden sm:inline">{statusInfo.text}</span>
                 </div>
                 
                 <div className="flex items-center gap-2">
                   {report.status === 'sent' && (
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button variant="ghost" size="sm" className="flex-1 gap-1.5">
                       <Mail className="h-4 w-4" />
+                      Email
                     </Button>
                   )}
-                  <Button variant="outline" size="sm" className="gap-1.5">
+                  <Button variant="outline" size="sm" className="flex-1 gap-1.5">
                     <Download className="h-4 w-4" />
-                    <span className="hidden sm:inline">Download</span>
+                    Download
                   </Button>
+                </div>
+              </div>
+              
+              {/* Desktop layout */}
+              <div className="hidden sm:flex items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className={`p-2.5 rounded-lg ${
+                    report.format === 'pdf' ? 'bg-destructive/10' : 'bg-success/10'
+                  }`}>
+                    {report.format === 'pdf' ? (
+                      <FileText className="h-5 w-5 text-destructive" />
+                    ) : (
+                      <FileSpreadsheet className="h-5 w-5 text-success" />
+                    )}
+                  </div>
+                  
+                  <div>
+                    <h3 className="font-medium text-sm text-foreground">{report.title}</h3>
+                    <div className="flex items-center gap-2 mt-1">
+                      <Badge variant="outline" className="text-xs">
+                        {getTypeLabel(report.type)}
+                      </Badge>
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <Calendar className="h-3 w-3" />
+                        {report.date.toLocaleDateString('pt-BR')}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <div className={`flex items-center gap-1.5 text-sm ${statusInfo.className}`}>
+                    <StatusIcon className="h-4 w-4" />
+                    <span>{statusInfo.text}</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    {report.status === 'sent' && (
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Mail className="h-4 w-4" />
+                      </Button>
+                    )}
+                    <Button variant="outline" size="sm" className="gap-1.5">
+                      <Download className="h-4 w-4" />
+                      Download
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>

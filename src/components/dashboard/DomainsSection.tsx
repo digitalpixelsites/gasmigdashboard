@@ -137,9 +137,9 @@ export function DomainsSection() {
   const highRiskCount = mockDomains.filter(d => d.riskLevel === 'high').length;
 
   return (
-    <section className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
+    <section className="space-y-4 md:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-center gap-3 flex-wrap">
           <h2 className="text-lg font-semibold text-foreground">Domínios Fraudulentos</h2>
           {highRiskCount > 0 && (
             <Badge variant="destructive" className="gap-1 animate-pulse-soft">
@@ -148,13 +148,83 @@ export function DomainsSection() {
             </Badge>
           )}
         </div>
-        <Button variant="outline" size="sm" className="gap-2">
+        <Button variant="outline" size="sm" className="gap-2 w-full sm:w-auto">
           <Shield className="h-4 w-4" />
           Ver Histórico
         </Button>
       </div>
 
-      <div className="glass-card overflow-hidden">
+      {/* Mobile Cards View */}
+      <div className="block lg:hidden space-y-3">
+        {mockDomains.map((domain, index) => {
+          const riskStyles = getRiskLevelStyles(domain.riskLevel);
+          
+          return (
+            <div 
+              key={domain.id}
+              className="glass-card p-4 animate-fade-in"
+              style={{ animationDelay: `${index * 50}ms` }}
+            >
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center gap-2 min-w-0 flex-1">
+                  <Globe className="h-4 w-4 text-muted-foreground shrink-0" />
+                  <span className="font-mono text-sm truncate">{domain.domain}</span>
+                </div>
+                <Badge 
+                  variant="outline" 
+                  className={`${riskStyles.bg} ${riskStyles.text} ${riskStyles.border} border shrink-0 ml-2`}
+                >
+                  {riskStyles.label}
+                </Badge>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-2 text-xs mb-3">
+                <div>
+                  <span className="text-muted-foreground">Tipo:</span>
+                  <p className="font-medium">{getRiskTypeLabel(domain.riskType)}</p>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">Criação:</span>
+                  <p className="font-medium">{domain.creationDate.toLocaleDateString('pt-BR')}</p>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">País:</span>
+                  <p className="font-medium">{domain.country}</p>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">SSL:</span>
+                  <div className="flex items-center gap-1">
+                    {domain.hasSSL ? (
+                      <>
+                        <Lock className="h-3 w-3 text-success" />
+                        <span className="text-success">Ativo</span>
+                      </>
+                    ) : (
+                      <>
+                        <Unlock className="h-3 w-3 text-muted-foreground" />
+                        <span className="text-muted-foreground">Inativo</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+              
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full gap-1.5 text-xs"
+                onClick={() => setSelectedDomain(domain)}
+              >
+                <ExternalLink className="h-3.5 w-3.5" />
+                Ver evidências
+              </Button>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Desktop Table View */}
+      <div className="glass-card overflow-hidden hidden lg:block">
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent">
